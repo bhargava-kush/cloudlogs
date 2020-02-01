@@ -1,0 +1,35 @@
+[
+{
+    "model": "cloudlogs.logs",
+    "pk": 1,
+    "fields": {
+        "title": "Tittle",
+        "description": "This is description",
+        "status": 200,
+        "content": "Content",
+        "source": "nginx"
+    }
+},
+{
+    "model": "cloudlogs.logs",
+    "pk": 2,
+    "fields": {
+        "title": "Tittle2",
+        "description": "This is description2",
+        "status": 400,
+        "content": "Content2",
+        "source": "gunicorn"
+    }
+},
+{
+    "model": "cloudlogs.logs",
+    "pk": 3,
+    "fields": {
+        "title": "Tittle2",
+        "description": "This is description2",
+        "status": 200,
+        "content": "Content2",
+        "source": "nginx"
+    }
+}
+]
