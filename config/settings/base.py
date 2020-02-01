@@ -3,6 +3,7 @@ Base settings to build other settings files upon.
 """
 
 import environ
+import os
 
 ROOT_DIR = (
     environ.Path(__file__) - 3
@@ -11,10 +12,10 @@ APPS_DIR = ROOT_DIR.path("montycloud")
 
 env = environ.Env()
 
-READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)
+READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=True)
 if READ_DOT_ENV_FILE:
     # OS environment variables take precedence over variables from .env
-    env.read_env(str(ROOT_DIR.path(".env")))
+    env.read_env(str(ROOT_DIR.path(".envs/.local/.django")))
 
 # GENERAL
 # ------------------------------------------------------------------------------
@@ -42,9 +43,28 @@ LOCALE_PATHS = [ROOT_DIR.path("locale")]
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
-DATABASES = {
-    "default": env.db("DATABASE_URL", default="postgres:///montycloud")
-}
+if os.environ.get('DB') == "Postgresql":
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'montycloud',
+            'USER': 'kushbhargava',
+            'PASSWORD': os.environ.get('PASSWORD'),
+            'HOST': os.environ.get('POSTGRES_HOST'),
+            'PORT': '5432',
+        }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'djongo',
+            'NAME': 'MyDB',
+        }
+    }
+
+# DATABASES = {
+#     "default": env.db("DATABASE_URL", default="postgres:///montycloud")
+# }
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 # URLS
