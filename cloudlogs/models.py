@@ -8,6 +8,11 @@ class Logs(models.Model):
     content = models.TextField()
     source = models.CharField(max_length=100)
 
+    @classmethod
+    def from_file(cls, line):
+        log = cls.create(title=title, description=description, status=status, content=content, source=source)
+        return log
+
     def __str__(self):
         return self.title
 
